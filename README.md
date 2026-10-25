@@ -48,8 +48,12 @@ The game loads its assets from the `assets/` and `objects/` folders, so run it f
 
 ## What I learned
 
-[Write this part in your own words.]
+- **Collision against real meshes.** The player is tested against each triangle of a level mesh, not just its bounding box, and pushed out along the surface. That's also what makes sliding down slopes work.
+- **Small details change how movement feels.** A short jump buffer, friction, and widening the field of view with speed make movement feel more responsive, even though each is only a few lines.
+- **Designing a small engine.** Instead of hard-coding the pistol, I built an object system with templates, key-value attributes, and registered functions, so a new item only needs its own `.cpp` file.
 
 ## What I would improve next
 
-[Write this part in your own words.]
+- Finish the pistol: projectiles, ammo, and recoil.
+- Build real levels and the scoring from the game concept: clear a level as fast as possible.
+- Fix the `raylib` submodule so the project builds from a fresh clone without extra steps.
