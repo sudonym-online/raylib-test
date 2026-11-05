@@ -1,13 +1,10 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "rlgl.h"
-#include "src/game.h"
 #include "src/player.h"
-#include "src/input.h"
 #include "src/physics.h"
 #include "src/objects.h"
-#include "src/debug.h"
-#include "src/skybox.h"
+#include "src/render.h"
 
 Debug dbg;
 Player player;

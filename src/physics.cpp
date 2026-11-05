@@ -164,34 +164,30 @@ void physicsProcess(float deltaTime, Player &player, Camera3D &camera) {
     camera.target = Vector3Add(camera.target, moveDiff);
 }
 
-RayCollision raycastBox(Ray ray, int *outBody) {
-    RayCollision result = {0};
-    result.hit = false;
-    result.distance = FLT_MAX;
+// RayCollision raycastBox(Ray ray, int *outBody) {
+//     RayCollision result = {0};
+//     result.hit = false;
+//     result.distance = FLT_MAX;
+//     for (int i = 0; i < Objects::registry.bodyCount; i++) {
+//         RayCollision c = GetRayCollisionBox(ray, Objects::registry.bodies[i].aabb);
+//         if (c.hit && c.distance < result.distance) {
+//             result = c;
+//             if (outBody) *outBody = i;
+//         }
+//     }
+//     return result;
+// }
+
+RayCollision raycast(Ray ray, int *outBody) {
+    RayCollision collision = { 0 };
+    
+
+    // PHASE 1 : GET AABB BOXES THAT COLLIDE W/ RAY
+
     for (int i = 0; i < Objects::registry.bodyCount; i++) {
         RayCollision c = GetRayCollisionBox(ray, Objects::registry.bodies[i].aabb);
-        if (c.hit && c.distance < result.distance) {
-            result = c;
-            if (outBody) *outBody = i;
-        }
+        if (c.hit)
     }
-    return result;
-}
-
-RayCollision raycastMesh(Ray ray, int *outBody) {
-    // --- setup
-    RayCollision result = {0};
-    result.hit = false;
-    result.distance = FLT_MAX;
-
-    // --- get bodies that aabb intersect with mesh , cant use raycastBox b/c that uses the closes mesh
-
-    int box = -1;
-    RayCollision boxResult = raycastBox(ray, &box);
-
-
-
-    if (!boxResult.hit) return result;
-
-
+    
+    
 }

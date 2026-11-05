@@ -2,15 +2,37 @@
 #define OBJECTS_H
 
 #include <cstring>
-#include "debug.h"
-#include "game.h"
+#include "raylib.h"
+
+struct Triangle {
+    Vector3             v0, v1, v2;
+    Vector3             normal;
+};
+
+namespace Objects { struct ObjectRegistry; }
+
+struct StaticBody {
+    BoundingBox         aabb;
+    Color               tint =              WHITE;
+    Model               model;
+    Vector3             position;
+    Vector3             scale;
+    float               rotation;
+    int                 triOffset;
+    int                 triCount;
+    int                 instanceId =        0;
+
+    Matrix Transform();
+    void UpdateAABB();
+    void ExtractTriangles(Objects::ObjectRegistry &reg);
+    void draw();
+};
 
 namespace Objects {
 
     const int MAX_ATTRS = 32;
     const int MAX_TEMPLATES = 32;
     const int MAX_INSTANCES = 128;
-    const int MAX_OBJECT_INSTANCES = 128;
     const int MAX_TOTAL_TRIANGLES = 65536;
     const int MAX_FUNCTIONS = 64;
 
@@ -35,7 +57,7 @@ namespace Objects {
         ObjectInstance instances[MAX_INSTANCES];
         int instanceCount;
 
-        StaticBody bodies[MAX_OBJECT_INSTANCES];
+        StaticBody bodies[MAX_INSTANCES];
         int bodyCount;
 
         Triangle trianglePool[MAX_TOTAL_TRIANGLES];

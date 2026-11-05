@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "game.h"
 #include "raylib.h"
 
 
@@ -72,5 +71,7 @@ public:
     void Hold(int itemId);
     void Use(bool down);
 };
+
+void inputProcess(float deltaTime, Player &player, Camera3D &camera);
 
 #endif

@@ -7,7 +7,7 @@ else
   LDFLAGS = -Lraylib/build/raylib -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -lXcursor -lXinerama -lXrandr -lXi
 endif
 
-SRC = main.cpp src/debug.cpp src/game.cpp src/input.cpp src/objects.cpp src/physics.cpp src/player.cpp src/skybox.cpp $(wildcard objects/*/*.cpp)
+SRC = main.cpp src/objects.cpp src/physics.cpp src/player.cpp src/render.cpp $(wildcard objects/*/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 DEP = $(OBJ:.o=.d)
 TARGET = main
