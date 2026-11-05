@@ -18,7 +18,7 @@ struct StaticBody {
     Vector3             position;
     Vector3             scale;
     float               rotation;
-    int                 triOffset;
+    int                 triStart;
     int                 triCount;
     int                 instanceId =        0;
 

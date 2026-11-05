@@ -10,12 +10,9 @@ static float numberOf(int id, const char *key) {
 
 static void deagleUse(int id, Vector3 origin, Vector3 direction) {
     int body = -1;
-    RayCollision hit = raycastBox((Ray){origin, direction}, &body);
 
     // 01 --- SPAWN PROJECTILE IF POSSIBLE
-    if (hit.hit) {
-        int projectile = Objects::Create()
-    }
+
     // 02 --- UPDATE AMMO COUNT
 
     // 03 --- TRIGGER RECOIL

@@ -296,7 +296,7 @@ void StaticBody::UpdateAABB() {
 }
 
 void StaticBody::ExtractTriangles(Objects::ObjectRegistry &reg) {
-    triOffset = reg.trianglePoolCount;
+    triStart = reg.trianglePoolCount;
     triCount = 0;
     Matrix transform = Transform();
 

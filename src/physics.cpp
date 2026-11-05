@@ -1,8 +1,10 @@
 #include "physics.h"
 #include "objects.h"
 #include "raymath.h"
+#include <cfloat>
 #include <math.h>
 #include <float.h>
+#include <vector>
 
 static void applyFriction(float deltaTime, Player &player) {
     player.movement.velocity.x *= (1.0f - player.movement.friction * deltaTime);
@@ -70,7 +72,7 @@ static void slide(Player &player, const Vector3 &n, float gravity, float deltaTi
 static void resolveBodyTriangles(Player &player, StaticBody &body, float deltaTime) {
     const BoundingBox &box = player.collision.aabb;
     for (int t = 0; t < body.triCount; t++) {
-        Triangle &tri = Objects::registry.trianglePool[body.triOffset + t];
+        Triangle &tri = Objects::registry.trianglePool[body.triStart + t];
 
         // ------------------- BROAD PHASE -------------------
         if (fmaxf(fmaxf(tri.v0.x, tri.v1.x), tri.v2.x) < box.min.x ||
@@ -180,14 +182,30 @@ void physicsProcess(float deltaTime, Player &player, Camera3D &camera) {
 
 RayCollision raycast(Ray ray, int *outBody) {
     RayCollision collision = { 0 };
-    
+    collision.distance = FLT_MAX;
+    int collisionBody = -1;
 
-    // PHASE 1 : GET AABB BOXES THAT COLLIDE W/ RAY
+    std::vector<int> p1;
 
     for (int i = 0; i < Objects::registry.bodyCount; i++) {
         RayCollision c = GetRayCollisionBox(ray, Objects::registry.bodies[i].aabb);
-        if (c.hit)
+        if (c.hit) { p1.push_back(i); }
     }
-    
-    
+
+    for (int body : p1){
+        StaticBody &b = Objects::registry.bodies[body];
+        for (int j = 0; j < b.triCount; j++) {
+            Triangle &tri = Objects::registry.trianglePool[b.triStart + j];
+            RayCollision c =GetRayCollisionTriangle(ray, tri.v0, tri.v1, tri.v2);
+
+            if(c.hit && c.distance < collision.distance) {
+                collision = c;
+                if (outBody) *outBody = body;
+            }
+        }
+    }
+
+    return collision;
+
+
 }
